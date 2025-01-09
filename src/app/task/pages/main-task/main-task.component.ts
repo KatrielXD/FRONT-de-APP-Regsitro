@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CrudService } from 'src/app/services/crud.service';
+import Swal from 'sweetalert2'
+
 
 @Component({
   selector: 'app-main-task',
@@ -46,10 +48,31 @@ export class MainTaskComponent implements OnInit{
   }
 
   delete(id: string){
-    this.crudService.delete(id).subscribe((response) => {
-      this.crudService.read().subscribe((res) =>{        
-        this.tasks = res.tareas1;
-      });
+    Swal.fire({
+      title: '¿Quieres eliminar este registro?',
+      showDenyButton: true,      
+      confirmButtonText: 'Sí',
+      denyButtonText: 'No',
+      customClass: {
+        actions: 'my-actions',        
+        confirmButton: 'order-1',
+        denyButton: 'order-1',
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.crudService.delete(id).subscribe({
+          next: () => {
+            this.crudService.read().subscribe({
+              next: (res) => {                  
+               this.tasks = res.tareas1;           
+              }
+            })
+          },
+          error: er => {
+            console.log(er)
+          } 
+        })        
+      }
     })
   }
 

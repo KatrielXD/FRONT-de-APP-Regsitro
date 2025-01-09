@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
 export class RegisterScreenComponent {
   miFormulario: FormGroup = this.fb.group({
     username: ["", [Validators.required, Validators.minLength(3), ]],
-    email: ["", [Validators.required, Validators.email, ]],
+    email: ["", [Validators.required, Validators.email]],
     password: ["", [Validators.required, Validators.minLength(6), ]],
     password2: ["", [Validators.required, Validators.minLength(6), ]]
   })
