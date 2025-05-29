@@ -28,8 +28,6 @@ export class MainTaskComponent implements OnInit{
 
   create(){
     console.log()
-        
-  
     this.crudService.create(this.miFormulario.value.newTask).subscribe((response) => {
 
       this.miFormulario.reset();
